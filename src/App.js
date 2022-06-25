@@ -1,13 +1,15 @@
 import { render } from "react-dom";
-//import Pet from "./pet";
+import { StrictMode } from "react";
 import SearchParams from "./SearchPrrams";
 
 const App = () => {
   return (
-    <div>
-      <h1>Adopt Me!</h1>
-      <SearchParams />
-    </div>
+    <StrictMode>
+      <div>
+        <h1>Adopt Me!</h1>
+        <SearchParams />
+      </div>
+    </StrictMode>
   );
 };
 

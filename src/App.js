@@ -1,25 +1,46 @@
 import { render } from "react-dom";
+//import SearchParams from "./SearchPrrams";
+import { StrictMode, useState, lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { StrictMode, useState } from "react";
+//import Details from "./Details";
 import ThemeContext from "./ThemeContext";
-import SearchParams from "./SearchPrrams";
-import Details from "./Details";
+
+// import "./style.css";
+// import Header from "./Header";
+
+const Details = lazy(() => import("./Details"));
+const SearchParams = lazy(() => import("./SearchPrrams"));
 
 const App = () => {
   const theme = useState("darkblue");
   return (
     <StrictMode>
-      <ThemeContext.Provider value={theme}>
-        <BrowserRouter>
-          <header>
-            <Link to="/">Adopt Me!</Link>
-          </header>
-          <Routes>
-            <Route path="/details/:id" element={<Details />}></Route>
-            <Route path="/" element={<SearchParams />}></Route>
-          </Routes>
-        </BrowserRouter>
-      </ThemeContext.Provider>
+      <Suspense fallback={<h2>loading, be patient</h2>}>
+        <ThemeContext.Provider value={theme}>
+          <div
+            className="p-0 m-0"
+            style={{
+              background:
+                "url(http://pets-images.dev-apis.com/pets/wallpaperB.jpg)",
+            }}
+          >
+            <BrowserRouter>
+              <header className="w-full mb-10 text-center p-7 bg-gradient-to-b from-purple-400 via-pink-500 to-red-500">
+                <Link
+                  className="text-6xl text-white hover:text-gray-200"
+                  to="/"
+                >
+                  Adopt Me!
+                </Link>
+              </header>
+              <Routes>
+                <Route path="/details/:id" element={<Details />} />
+                <Route path="/" element={<SearchParams />} />
+              </Routes>
+            </BrowserRouter>
+          </div>
+        </ThemeContext.Provider>
+      </Suspense>
     </StrictMode>
   );
 };

@@ -1,13 +1,13 @@
-import { Component } from "react";
+import { Component, ErrorInfo } from "react";
 import { Link, Navigate } from "react-router-dom";
 
-class Error extends Component {
-  state = { hasError: false };
+class ErrorBoundary extends Component {
+  state = { hasError: false, redirect: false };
 
   static getDerivedStateFromError() {
     return { hasError: true, redirect: false };
   }
-  componentDidCatch(error, info) {
+  componentDidCatch(error: Error, info: ErrorInfo): void {
     console.error("ErrorBoundary caught an error", error, info);
   }
   componentDidUpdate() {
@@ -32,4 +32,4 @@ class Error extends Component {
   }
 }
 
-export default Error;
+export default ErrorBoundary;
